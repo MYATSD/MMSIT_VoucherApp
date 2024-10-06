@@ -1,0 +1,498 @@
+{
+  "products": [
+    {
+      "product_name": "E-commerce Setup Service",
+      "price": "1200",
+      "created_at": "2024-10-06T03:45:27.664Z",
+      "id": 5
+    },
+    {
+      "id": 6,
+      "product_name": "Website Maintenance Plan",
+      "price": 200,
+      "created_at": "2024-09-09T08:50:25Z"
+    },
+    {
+      "id": 7,
+      "product_name": "CMS Integration Service",
+      "price": 500,
+      "created_at": "2024-09-08T11:30:00Z"
+    },
+    {
+      "id": 8,
+      "product_name": "Web Hosting and Deployment",
+      "price": 250,
+      "created_at": "2024-09-07T18:00:00Z"
+    },
+    {
+      "id": 9,
+      "product_name": "Custom Web Application Development",
+      "price": 2000,
+      "created_at": "2024-09-06T09:45:00Z"
+    },
+    {
+      "id": 10,
+      "product_name": "UI/UX Design Consulting",
+      "price": 700,
+      "created_at": "2024-09-05T15:00:00Z"
+    },
+    {
+      "product_name": "Custom Web Application ",
+      "price": "1200",
+      "created_at": "2024-09-18T04:34:43.699Z",
+      "id": 11
+    },
+    {
+      "product_name": "SWD",
+      "price": "2000",
+      "created_at": "2024-09-18T04:44:41.595Z",
+      "id": 14
+    },
+    {
+      "product_name": "Hosting Service",
+      "price": "1000",
+      "created_at": "2024-10-06T03:44:51.118Z",
+      "id": 16
+    }
+  ],
+  "vouchers": [
+    {
+      "voucher_id": "INV-20241003-2463",
+      "customer_name": "hazel",
+      "customer_email": "hazel@gmail.com",
+      "sale_date": "2024-10-03",
+      "all_corrected": "true",
+      "records": [
+        {
+          "id": 1727947478579,
+          "product": {
+            "id": 7,
+            "product_name": "CMS Integration Service",
+            "price": 500,
+            "created_at": "2024-09-08T11:30:00Z"
+          },
+          "quantity": 16,
+          "cost": 8000,
+          "created_at": "2024-10-03T09:24:38.579Z"
+        }
+      ],
+      "total": 8000,
+      "tax": 560,
+      "netTotal": 8560,
+      "id": 6
+    },
+    {
+      "voucher_id": "INV-20241003-9184",
+      "customer_name": "zaw",
+      "customer_email": "zaw@gmail.com",
+      "sale_date": "2024-10-03",
+      "all_corrected": "true",
+      "records": [
+        {
+          "id": 1727947506950,
+          "product": {
+            "id": 10,
+            "product_name": "UI/UX Design Consulting",
+            "price": 700,
+            "created_at": "2024-09-05T15:00:00Z"
+          },
+          "quantity": 8,
+          "cost": 5600,
+          "created_at": "2024-10-03T09:25:06.950Z"
+        },
+        {
+          "id": 1727947518957,
+          "product": {
+            "id": 6,
+            "product_name": "Website Maintenance Plan",
+            "price": 200,
+            "created_at": "2024-09-09T08:50:25Z"
+          },
+          "quantity": "2",
+          "cost": 400,
+          "created_at": "2024-10-03T09:25:18.957Z"
+        }
+      ],
+      "total": 6000,
+      "tax": 420.00000000000006,
+      "netTotal": 6420,
+      "id": 7
+    },
+    {
+      "voucher_id": "INV-20241004-7303",
+      "customer_name": "Charm",
+      "customer_email": "charm@gmail.com",
+      "sale_date": "2024-10-04",
+      "all_corrected": "true",
+      "records": [
+        {
+          "id": 1728040085046,
+          "product": {
+            "id": 6,
+            "product_name": "Website Maintenance Plan",
+            "price": 200,
+            "created_at": "2024-09-09T08:50:25Z"
+          },
+          "quantity": "3",
+          "cost": 600,
+          "created_at": "2024-10-04T11:08:05.046Z"
+        },
+        {
+          "id": 1728040090171,
+          "product": {
+            "id": 7,
+            "product_name": "CMS Integration Service",
+            "price": 500,
+            "created_at": "2024-09-08T11:30:00Z"
+          },
+          "quantity": "3",
+          "cost": 1500,
+          "created_at": "2024-10-04T11:08:10.171Z"
+        },
+        {
+          "id": 1728040097094,
+          "product": {
+            "id": 10,
+            "product_name": "UI/UX Design Consulting",
+            "price": 700,
+            "created_at": "2024-09-05T15:00:00Z"
+          },
+          "quantity": "5",
+          "cost": 3500,
+          "created_at": "2024-10-04T11:08:17.094Z"
+        },
+        {
+          "id": 1728040103673,
+          "product": {
+            "product_name": "Search Engine",
+            "price": "1200",
+            "created_at": "2024-09-18T04:42:43.249Z",
+            "id": 13
+          },
+          "quantity": "5",
+          "cost": 6000,
+          "created_at": "2024-10-04T11:08:23.673Z"
+        }
+      ],
+      "total": 11600,
+      "tax": 812.0000000000001,
+      "netTotal": 12412,
+      "id": 8
+    },
+    {
+      "voucher_id": "INV-20241004-3622",
+      "customer_name": "Monica",
+      "customer_email": "monica@gmail.com",
+      "sale_date": "2024-10-04",
+      "               redirect_to_detail": false,
+      "all_corrected": "true",
+      "redirect_to_detail": true,
+      "records": [
+        {
+          "id": 1728065325742,
+          "product": {
+            "id": 7,
+            "product_name": "CMS Integration Service",
+            "price": 500,
+            "created_at": "2024-09-08T11:30:00Z"
+          },
+          "quantity": "9",
+          "cost": 4500,
+          "created_at": "2024-10-04T18:08:45.742Z"
+        },
+        {
+          "id": 1728065328817,
+          "product": {
+            "id": 9,
+            "product_name": "Custom Web Application Development",
+            "price": 2000,
+            "created_at": "2024-09-06T09:45:00Z"
+          },
+          "quantity": "8",
+          "cost": 16000,
+          "created_at": "2024-10-04T18:08:48.817Z"
+        },
+        {
+          "id": 1728065338648,
+          "product": {
+            "id": 6,
+            "product_name": "Website Maintenance Plan",
+            "price": 200,
+            "created_at": "2024-09-09T08:50:25Z"
+          },
+          "quantity": "4",
+          "cost": 800,
+          "created_at": "2024-10-04T18:08:58.648Z"
+        }
+      ],
+      "total": 21300,
+      "tax": 1491.0000000000002,
+      "netTotal": 22791,
+      "id": 9
+    },
+    {
+      "voucher_id": "INV-20241004-9828",
+      "customer_name": "Esther",
+      "customer_email": "esther@gmail.com",
+      "sale_date": "2024-10-04",
+      "redirect_to_detail": true,
+      "all_corrected": "true",
+      "records": [
+        {
+          "id": 1728065654063,
+          "product": {
+            "id": 7,
+            "product_name": "CMS Integration Service",
+            "price": 500,
+            "created_at": "2024-09-08T11:30:00Z"
+          },
+          "quantity": "4",
+          "cost": 2000,
+          "created_at": "2024-10-04T18:14:14.063Z"
+        },
+        {
+          "id": 1728065659745,
+          "product": {
+            "product_name": "Custom Web Application ",
+            "price": "1200",
+            "created_at": "2024-09-18T04:34:43.699Z",
+            "id": 11
+          },
+          "quantity": "2",
+          "cost": 2400,
+          "created_at": "2024-10-04T18:14:19.745Z"
+        }
+      ],
+      "total": 4400,
+      "tax": 308.00000000000006,
+      "netTotal": 4708,
+      "id": 10
+    },
+    {
+      "voucher_id": "INV-20241004-7355",
+      "customer_name": "Coco",
+      "customer_email": "coco@gmail.com",
+      "sale_date": "2024-10-04",
+      "redirect_to_detail": true,
+      "all_corrected": "true",
+      "records": [
+        {
+          "id": 1728065764910,
+          "product": {
+            "id": 8,
+            "product_name": "Web Hosting and Deployment",
+            "price": 250,
+            "created_at": "2024-09-07T18:00:00Z"
+          },
+          "quantity": "2",
+          "cost": 500,
+          "created_at": "2024-10-04T18:16:04.910Z"
+        },
+        {
+          "id": 1728065772129,
+          "product": {
+            "product_name": "Custom Web Application ",
+            "price": "1200",
+            "created_at": "2024-09-18T04:34:43.699Z",
+            "id": 11
+          },
+          "quantity": 3,
+          "cost": 3600,
+          "created_at": "2024-10-04T18:16:12.129Z"
+        }
+      ],
+      "total": 4100,
+      "tax": 287,
+      "netTotal": 4387,
+      "id": 11
+    },
+    {
+      "voucher_id": "INV-20241004-2427",
+      "customer_name": "Selena",
+      "customer_email": "selena@gmail.com",
+      "sale_date": "2024-10-04",
+      "redirect_to_detail": true,
+      "all_corrected": "true",
+      "records": [
+        {
+          "id": 1728065825317,
+          "product": {
+            "id": 5,
+            "product_name": "E-commerce Setup Service",
+            "price": 1500,
+            "created_at": "2024-09-10T16:20:15Z"
+          },
+          "quantity": "2",
+          "cost": 3000,
+          "created_at": "2024-10-04T18:17:05.317Z"
+        },
+        {
+          "id": 1728065828767,
+          "product": {
+            "id": 7,
+            "product_name": "CMS Integration Service",
+            "price": 500,
+            "created_at": "2024-09-08T11:30:00Z"
+          },
+          "quantity": "4",
+          "cost": 2000,
+          "created_at": "2024-10-04T18:17:08.767Z"
+        }
+      ],
+      "total": 5000,
+      "tax": 350.00000000000006,
+      "netTotal": 5350,
+      "id": 12
+    },
+    {
+      "voucher_id": "INV-20241005-4524",
+      "customer_name": "Nyo ",
+      "customer_email": "nyo@gmail.com",
+      "sale_date": "2024-10-05",
+      "redirect_to_detail": true,
+      "all_corrected": "true",
+      "records": [
+        {
+          "id": 1728106546511,
+          "product": {
+            "id": 7,
+            "product_name": "CMS Integration Service",
+            "price": 500,
+            "created_at": "2024-09-08T11:30:00Z"
+          },
+          "quantity": "3",
+          "cost": 1500,
+          "created_at": "2024-10-05T05:35:46.511Z"
+        },
+        {
+          "id": 1728106551055,
+          "product": {
+            "id": 10,
+            "product_name": "UI/UX Design Consulting",
+            "price": 700,
+            "created_at": "2024-09-05T15:00:00Z"
+          },
+          "quantity": "7",
+          "cost": 4900,
+          "created_at": "2024-10-05T05:35:51.055Z"
+        },
+        {
+          "id": 1728106556215,
+          "product": {
+            "id": 8,
+            "product_name": "Web Hosting and Deployment",
+            "price": 250,
+            "created_at": "2024-09-07T18:00:00Z"
+          },
+          "quantity": "2",
+          "cost": 500,
+          "created_at": "2024-10-05T05:35:56.215Z"
+        },
+        {
+          "id": 1728106563380,
+          "product": {
+            "id": 9,
+            "product_name": "Custom Web Application Development",
+            "price": 2000,
+            "created_at": "2024-09-06T09:45:00Z"
+          },
+          "quantity": 4,
+          "cost": 8000,
+          "created_at": "2024-10-05T05:36:03.380Z"
+        }
+      ],
+      "total": 14900,
+      "tax": 1043,
+      "netTotal": 15943,
+      "id": 13
+    },
+    {
+      "voucher_id": "INV-20241006-1200",
+      "customer_name": "Mo Mo",
+      "customer_email": "momo@gmail.com",
+      "sale_date": "2024-10-01",
+      "redirect_to_detail": false,
+      "all_corrected": "true",
+      "records": [
+        {
+          "id": 1728186653335,
+          "product": {
+            "id": 6,
+            "product_name": "Website Maintenance Plan",
+            "price": 200,
+            "created_at": "2024-09-09T08:50:25Z"
+          },
+          "quantity": "2",
+          "cost": 400,
+          "created_at": "2024-10-06T03:50:53.335Z"
+        },
+        {
+          "id": 1728186662290,
+          "product": {
+            "product_name": "Hosting Service",
+            "price": "1000",
+            "created_at": "2024-10-06T03:44:51.118Z",
+            "id": 16
+          },
+          "quantity": 4,
+          "cost": 4000,
+          "created_at": "2024-10-06T03:51:02.290Z"
+        }
+      ],
+      "total": 4400,
+      "tax": 308.00000000000006,
+      "netTotal": 4708,
+      "id": 14
+    },
+    {
+      "voucher_id": "INV-20241006-3728",
+      "customer_name": "Mie",
+      "customer_email": "mie@gmail.com",
+      "sale_date": "2024-10-06",
+      "redirect_to_detail": true,
+      "all_corrected": "true",
+      "records": [
+        {
+          "id": 1728186759353,
+          "product": {
+            "id": 9,
+            "product_name": "Custom Web Application Development",
+            "price": 2000,
+            "created_at": "2024-09-06T09:45:00Z"
+          },
+          "quantity": "6",
+          "cost": 12000,
+          "created_at": "2024-10-06T03:52:39.353Z"
+        },
+        {
+          "id": 1728186768064,
+          "product": {
+            "product_name": "Custom Web Application ",
+            "price": "1200",
+            "created_at": "2024-09-18T04:34:43.699Z",
+            "id": 11
+          },
+          "quantity": "7",
+          "cost": 8400,
+          "created_at": "2024-10-06T03:52:48.064Z"
+        },
+        {
+          "id": 1728186775298,
+          "product": {
+            "id": 10,
+            "product_name": "UI/UX Design Consulting",
+            "price": 700,
+            "created_at": "2024-09-05T15:00:00Z"
+          },
+          "quantity": "2",
+          "cost": 1400,
+          "created_at": "2024-10-06T03:52:55.298Z"
+        }
+      ],
+      "total": 21800,
+      "tax": 1526.0000000000002,
+      "netTotal": 23326,
+      "id": 15
+    }
+  ]
+}
