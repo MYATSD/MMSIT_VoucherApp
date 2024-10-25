@@ -6,8 +6,11 @@ import toast from "react-hot-toast";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import FormatDateTime from "./FormatDateTime";
+import useCookie from "react-use-cookie";
 
-const ProductRow = ({ product: { id, product_name, price, created_at } }) => {
+const ProductRow = ({ product: { id, product_name, price, created_at, updated_at } }) => {
+
+  const [token] = useCookie("my_token")
   pinwheel.register();
   const { mutate } = useSWRConfig();
 
@@ -40,7 +43,11 @@ const ProductRow = ({ product: { id, product_name, price, created_at } }) => {
         await fetch(import.meta.env.VITE_BASE_URL + `/products/${id}`, {
           method: "DELETE",
           headers: {
-            "Content-Type": "/application/json",
+            "Content-Type": "application/json",
+            Accept: "application/json",
+            Authorization: `Bearer ${token}`
+
+
           },
         });
         await mutate(import.meta.env.VITE_BASE_URL + "/products");
@@ -66,9 +73,13 @@ const ProductRow = ({ product: { id, product_name, price, created_at } }) => {
 
       </td>
       <td className="px-6 py-4 text-end">
+        <FormatDateTime timeStamp={updated_at} />
+
+      </td>
+      <td className="px-6 py-4 text-end">
         <div className="inline-flex rounded  " role="group">
           <Link
-            to={`/product/edit/${id}`}
+            to={`edit/${id}`}
             type="button"
             className="px-2 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-s-lg hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-blue-500 dark:focus:text-white"
           >

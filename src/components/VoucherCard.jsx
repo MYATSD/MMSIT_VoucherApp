@@ -143,13 +143,13 @@ const VoucherCard = () => {
                                 <div className="flex justify-between ">
                                     <div>
                                         <h1 className="text-3xl font-bold">INVOICE</h1>
-                                        <p className="  mt-2 text-sm">Voucher ID: {data.voucher_id}</p>
+                                        <p className="  mt-2 text-sm">Voucher ID: {data.data.voucher_id}</p>
                                     </div>
                                     <div className="text-right">
                                         <h2 className=" font-bold">INVOICE TO</h2>
-                                        <p className="mt-2">{data.customer_name}</p>
+                                        <p className="mt-2">{data.data.customer_name}</p>
 
-                                        <p>Date: {data.sale_date}</p>
+                                        <p>Date: {data.data.sale_date}</p>
                                     </div>
                                 </div>
                             </div>
@@ -167,8 +167,8 @@ const VoucherCard = () => {
                                         </tr>
                                     </thead>
                                     <tbody className='border-b py-5'>
-                                        {data.records.map((record, index) =>
-                                            <tr key={data.id}>
+                                        {data?.data?.records.map((record, index) =>
+                                            <tr key={data.data.id}>
                                                 <td className="p-3 text-sm">{index + 1}</td>
                                                 <td className="p-3 text-sm">{record.product.product_name}</td>
                                                 <td className="p-3 text-sm text-right">{record.quantity}</td>
@@ -180,17 +180,17 @@ const VoucherCard = () => {
                                     <tfoot className=''>
                                         <tr className='' >
                                             <td className="p-3 text-sm font-bold text-end" colSpan={4}>Total</td>
-                                            <td className="p-3 text-sm text-end">{data.total.toFixed(2)}</td>
+                                            <td className="p-3 text-sm text-end">{parseFloat(data.data.total).toFixed(2)}</td>
 
                                         </tr>
                                         <tr >
                                             <td className="p-2 text-sm font-bold text-end" colSpan={4}>Tax</td>
-                                            <td className="p-2 text-sm text-end">{data.tax.toFixed(2)}</td>
+                                            <td className="p-2 text-sm text-end">{parseFloat(data.data.tax).toFixed(2)}</td>
 
                                         </tr>
                                         <tr >
                                             <td className="p-2 text-sm font-bold text-end" colSpan={4}>Net Total</td>
-                                            <td className="p-2 text-sm text-end">{data.netTotal.toFixed(2)}</td>
+                                            <td className="p-2 text-sm text-end">{parseFloat(data.data.net_total).toFixed(2)}</td>
 
                                         </tr>
                                     </tfoot>

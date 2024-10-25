@@ -6,8 +6,10 @@ import SaleForm from "./SaleForm";
 import VoucherTable from "./VoucherTable";
 import useRecordStore from "../store/useRecordStore";
 import { useNavigate } from "react-router-dom";
+import useCookie from "react-use-cookie";
 
 const VoucherInfo = () => {
+  const [token] = useCookie("my_token")
   const nav = useNavigate()
   const {
     register,
@@ -35,27 +37,36 @@ const VoucherInfo = () => {
   const onSubmit = async (data) => {
     const total = records.reduce((pv, cv) => pv + cv.cost, 0)
     const tax = total * 0.07
-    const netTotal = total + tax
+    const net_total = total + tax
 
-    const currentVoucher = { ...data, records, total, tax, netTotal }
-    console.log(data)
+    const currentVoucher = { ...data, records, total, tax, net_total }
+    console.log(currentVoucher)
     setSending(true)
 
     const res = await fetch(import.meta.env.VITE_BASE_URL + "/vouchers", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        Accept: "application/json",
+        Authorization: `Bearer ${token}`
+
       },
       body: JSON.stringify(currentVoucher)
     })
 
     const json = await res.json()
+    console.log(json)
     setSending(false)
     reset()
     resetRecord()
-    toast.success("Voucher create successfully")
+    if (res.status === 201) {
+      toast.success("Voucher create successfully")
+
+    } else {
+      toast.error(res.statusText)
+    }
     if (data.redirect_to_detail) {
-      nav(`/voucher/detail/${json.id}`)
+      nav(`/voucher/detail/${json.voucher.id}`)
     }
   };
   return (

@@ -3,9 +3,23 @@ import { useForm } from "react-hook-form";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { waveform } from "ldrs";
 import toast from "react-hot-toast";
-import useSWR from "swr";
+import useSWR, { useSWRConfig } from "swr";
+import ProductEditCardLoader from "./ProductEditCardLoader";
+import useCookie from "react-use-cookie";
 
-const ProductCreateCard = () => {
+
+const ProductEditCard = () => {
+  const [token] = useCookie("my_token")
+
+  const fetcher = (url) => fetch(url, {
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json",
+      Authorization: `Bearer ${token}`
+
+    }
+  }).then((res) => res.json());
+
   const nav = useNavigate();
   const [sending, setSending] = useState(false);
   const {
@@ -16,70 +30,56 @@ const ProductCreateCard = () => {
   } = useForm();
   waveform.register();
   const { id } = useParams();
+  const { mutate } = useSWRConfig();
   console.log(id);
-  const fetcher = (url) => fetch(url).then((res) => res.json());
+  // mutate(import.meta.env.VITE_BASE_URL + "/products")
+
   const { data, isLoading, error } = useSWR(
     import.meta.env.VITE_BASE_URL + `/products/${id}`,
     fetcher
   );
-  console.log(data);
-  const handleEditProduct = async (data) => {
-    console.log(data);
+  console.log(isLoading);
+  console.log(data)
+
+  const handleEditProduct = async (formData) => {
+
+    console.log(formData);
     setSending(true);
-    await fetch(import.meta.env.VITE_BASE_URL + "/products/" + id, {
+    const res = await fetch(import.meta.env.VITE_BASE_URL + "/products/" + id, {
       method: "PUT",
       body: JSON.stringify({
-        product_name: data.product_name,
-        price: data.product_price,
+        product_name: formData.product_name,
+        price: formData.product_price,
         created_at: new Date().toISOString(),
       }),
       headers: {
         "Content-Type": "application/json",
+        Accept: "application/json",
+        Authorization: `Bearer ${token}`
       },
     });
     setSending(false);
-    if (data.back_to_product_list) {
-      nav("/product");
+    // await mutate(import.meta.env.VITE_BASE_URL + "/products")
+    console.log(res)
+    if (formData.back_to_product_list) {
+      console.log("GO TO PRODUCT")
+      nav("/dashboard/product");
     }
-    toast.success("Product update successfully");
+
+    if (res.status === 200) {
+      mutate(import.meta.env.VITE_BASE_URL + `/products/${id}`);
+
+      toast.success("Products Edit Successfully")
+    }
+    else {
+      toast.error(res.statusText)
+    }
   };
 
   return (
     <>
       {isLoading ? (
-        <div className="w-full md:w-1/2 p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-6 md:p-8 dark:bg-gray-800 dark:border-gray-700 animate-pulse">
-          <div>
-            <div className="h-8 bg-gray-300 rounded w-1/3 mb-2"></div>
-            <div className="h-4 bg-gray-300 rounded w-2/3"></div>
-          </div>
-
-          <form className="space-y-6 mt-10">
-            <div>
-              <div className="block mb-2 h-4 bg-gray-300 rounded w-1/4"></div>
-              <div className="h-10 bg-gray-200 rounded w-full"></div>
-            </div>
-
-            <div>
-              <div className="block mb-2 h-4 bg-gray-300 rounded w-1/4"></div>
-              <div className="h-10 bg-gray-200 rounded w-full"></div>
-            </div>
-
-            <div className="flex items-start">
-              <div className="h-4 w-4 bg-gray-200 rounded mr-2"></div>
-              <div className="h-4 bg-gray-300 rounded w-2/3"></div>
-            </div>
-
-            <div className="flex items-start">
-              <div className="h-4 w-4 bg-gray-200 rounded mr-2"></div>
-              <div className="h-4 bg-gray-300 rounded w-2/3"></div>
-            </div>
-
-            <div className="flex">
-              <div className="h-8 bg-gray-200 rounded w-1/3 mr-2"></div>
-              <div className="h-8 bg-gray-700 rounded w-1/3"></div>
-            </div>
-          </form>
-        </div>
+        <ProductEditCardLoader />
       ) : (
         <div className="w-full md:w-1/2 p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-6 md:p-8 dark:bg-gray-800 dark:border-gray-700">
           <div>
@@ -106,12 +106,11 @@ const ProductCreateCard = () => {
                   maxLength: 50,
                 })}
                 name="product_name"
-                defaultValue={data.product_name}
-                className={`${
-                  errors.product_name
-                    ? " border  dark:border-red-500 border-red-300 bg-teal-50 focus:ring-red-500 focus:border-red-500 "
-                    : "border  dark:border-teal-500 border-gray-300 bg-teal-50 focus:ring-teal-500 focus:border-teal-500"
-                } text-gray-900 text-sm rounded-lg  block w-full p-2.5 dark:bg-gray-600  dark:placeholder-gray-400 dark:text-white`}
+                defaultValue={data?.data?.product_name}
+                className={`${errors.product_name
+                  ? " border  dark:border-red-500 border-red-300 bg-teal-50 focus:ring-red-500 focus:border-red-500 "
+                  : "border  dark:border-teal-500 border-gray-300 bg-teal-50 focus:ring-teal-500 focus:border-teal-500"
+                  } text-gray-900 text-sm rounded-lg  block w-full p-2.5 dark:bg-gray-600  dark:placeholder-gray-400 dark:text-white`}
                 placeholder="Eg. Custom Website Design"
                 required
               />
@@ -137,13 +136,12 @@ const ProductCreateCard = () => {
                   min: 100,
                   max: 10000,
                 })}
-                defaultValue={data.price}
+                defaultValue={data?.data?.price}
                 placeholder="Eg. $500"
-                className={`${
-                  errors.product_price
-                    ? " border  dark:border-red-500 border-red-300 bg-teal-50 focus:ring-red-500 focus:border-red-500 "
-                    : "border  dark:border-teal-500 border-gray-300 bg-teal-50 focus:ring-teal-500 focus:border-teal-500"
-                } text-gray-900 text-sm rounded-lg  block w-full p-2.5 dark:bg-gray-600  dark:placeholder-gray-400 dark:text-white`}
+                className={`${errors.product_price
+                  ? " border  dark:border-red-500 border-red-300 bg-teal-50 focus:ring-red-500 focus:border-red-500 "
+                  : "border  dark:border-teal-500 border-gray-300 bg-teal-50 focus:ring-teal-500 focus:border-teal-500"
+                  } text-gray-900 text-sm rounded-lg  block w-full p-2.5 dark:bg-gray-600  dark:placeholder-gray-400 dark:text-white`}
                 required
               />
               {errors.product_price?.type === "required" && (
@@ -232,4 +230,4 @@ const ProductCreateCard = () => {
   );
 };
 
-export default ProductCreateCard;
+export default ProductEditCard;

@@ -2,10 +2,19 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import useSWR from "swr";
 import useRecordStore from "../store/useRecordStore";
+import useCookie from "react-use-cookie";
 
-const fetcher = (url) => fetch(url).then((res) => res.json());
 
 const SaleForm = () => {
+  const [token] = useCookie("my_token")
+
+  const fetcher = (url) => fetch(url, {
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json",
+      Authorization: `Bearer ${token}`
+    }
+  }).then((res) => res.json());
   const { addRecord, records, changeQuantity } = useRecordStore();
   const {
     register,
@@ -14,21 +23,22 @@ const SaleForm = () => {
     reset,
   } = useForm();
   const { data, isLoading, error } = useSWR(
-    import.meta.env.VITE_BASE_URL + "/products",
+    import.meta.env.VITE_BASE_URL + "/products?limit=100",
     fetcher
   );
   const onSubmit = (data) => {
+    console.log(data)
     const currentProduct = JSON.parse(data.product);
     const currentProductId = currentProduct.id
     const isExisted = records.find(({ product: { id } }) => id === currentProductId)
     console.log(isExisted)
     if (isExisted) {
-      changeQuantity(isExisted.id, data.quantity)
+      changeQuantity(isExisted.product_id, data.quantity)
 
     } else {
       const newRecord = {
-        id: Date.now(),
         product: currentProduct,
+        product_id: currentProduct.id,
 
         quantity: data.quantity,
         cost: currentProduct.price * data.quantity,
@@ -61,7 +71,7 @@ const SaleForm = () => {
             >
               <option value="">Select the Product</option>
               {!isLoading &&
-                data.map((product) => (
+                data?.data?.map((product) => (
                   <option
                     key={product.id}
                     value={JSON.stringify(product)}

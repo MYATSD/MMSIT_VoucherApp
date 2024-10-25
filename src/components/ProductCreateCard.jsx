@@ -3,8 +3,11 @@ import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import { waveform } from "ldrs";
 import toast from "react-hot-toast";
+import useCookie from "react-use-cookie";
 
 const ProductCreateCard = () => {
+  const [token] = useCookie("my_token")
+
   const nav = useNavigate();
   const [sending, setSending] = useState(false);
   const {
@@ -20,10 +23,12 @@ const ProductCreateCard = () => {
     console.log(data.product_name);
     console.log(data.product_price);
     setSending(true);
-    await fetch(import.meta.env.VITE_BASE_URL + "/products", {
+    const res = await fetch(import.meta.env.VITE_BASE_URL + "/products", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        Accept: "application/json",
+        Authorization: `Bearer ${token}`
       },
       body: JSON.stringify({
         product_name: data.product_name,
@@ -31,7 +36,7 @@ const ProductCreateCard = () => {
         created_at: new Date().toISOString(),
       }),
     });
-
+    const json = await res.json()
     // await fetch(import.meta.env.VITE_BASE_URL + "/products", {
     //   method: "POST",
     //   body: JSON.stringify({
@@ -45,10 +50,17 @@ const ProductCreateCard = () => {
     // });
     setSending(false);
 
-    toast.success("Product added successfully");
+    console.log(res)
+    console.log(json)
     reset();
     if (data.back_to_product_list) {
-      nav("/product");
+      nav("/dashboard/product");
+    }
+    if (res.status === 201) {
+      toast.success(json.message);
+    }
+    else {
+      toast.error(json.message)
     }
   };
   return (
@@ -78,11 +90,10 @@ const ProductCreateCard = () => {
               maxLength: 50,
             })}
             name="product_name"
-            className={`${
-              errors.product_name
-                ? " border  dark:border-red-500 border-red-300 bg-teal-50 focus:ring-red-500 focus:border-red-500 "
-                : "border  dark:border-teal-500 border-gray-300 bg-teal-50 focus:ring-teal-500 focus:border-teal-500"
-            } text-gray-900 text-sm rounded-lg  block w-full p-2.5 dark:bg-gray-600  dark:placeholder-gray-400 dark:text-white`}
+            className={`${errors.product_name
+              ? " border  dark:border-red-500 border-red-300 bg-teal-50 focus:ring-red-500 focus:border-red-500 "
+              : "border  dark:border-teal-500 border-gray-300 bg-teal-50 focus:ring-teal-500 focus:border-teal-500"
+              } text-gray-900 text-sm rounded-lg  block w-full p-2.5 dark:bg-gray-600  dark:placeholder-gray-400 dark:text-white`}
             placeholder="Eg. Custom Website Design"
             required
           />
@@ -109,11 +120,10 @@ const ProductCreateCard = () => {
               max: 10000,
             })}
             placeholder="Eg. $500"
-            className={`${
-              errors.product_price
-                ? " border  dark:border-red-500 border-red-300 bg-teal-50 focus:ring-red-500 focus:border-red-500 "
-                : "border  dark:border-teal-500 border-gray-300 bg-teal-50 focus:ring-teal-500 focus:border-teal-500"
-            } text-gray-900 text-sm rounded-lg  block w-full p-2.5 dark:bg-gray-600  dark:placeholder-gray-400 dark:text-white`}
+            className={`${errors.product_price
+              ? " border  dark:border-red-500 border-red-300 bg-teal-50 focus:ring-red-500 focus:border-red-500 "
+              : "border  dark:border-teal-500 border-gray-300 bg-teal-50 focus:ring-teal-500 focus:border-teal-500"
+              } text-gray-900 text-sm rounded-lg  block w-full p-2.5 dark:bg-gray-600  dark:placeholder-gray-400 dark:text-white`}
             required
           />
           {errors.product_price?.type === "required" && (
@@ -135,7 +145,6 @@ const ProductCreateCard = () => {
                 })}
                 id="all_correct"
                 type="checkbox"
-                defaultValue
                 className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800"
               />
             </div>

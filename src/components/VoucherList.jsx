@@ -5,12 +5,25 @@ import useSWR from "swr";
 import VoucherListRow from "./VoucherListRow";
 import SkeletonLoader from "./SkeletonLoader";
 import { debounce, throttle } from "lodash";
-
-const fetcher = (url) => fetch(url).then((res) => res.json())
+import Pagination from "./Pagination";
+import PaginationVoucher from "./PaginationVoucher";
+import useCookie from "react-use-cookie";
+import { Link } from "react-router-dom";
 
 const VoucherList = () => {
+  const [token] = useCookie("my_token")
+
+  const fetcher = (url) => fetch(url, {
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json",
+      Authorization: `Bearer ${token}`
+    }
+  }).then((res) => res.json())
+
   const searchInput = useRef("")
   console.log(searchInput)
+  const [fetchVoucher, setFetchVoucher] = useState(import.meta.env.VITE_BASE_URL + "/vouchers")
   const [search, setSearch] = useState("")
   const handleSearch = debounce(
     (e) => {
@@ -23,8 +36,12 @@ const VoucherList = () => {
     searchInput.current.value = ""
   }
 
-  const { data, isLoading, error } = useSWR(search ? `${import.meta.env.VITE_BASE_URL}/vouchers?voucher_id_like=${search}` : `${import.meta.env.VITE_BASE_URL}/vouchers`, fetcher)
+  const { data, isLoading, error } = useSWR(search ? `${import.meta.env.VITE_BASE_URL}/vouchers?q=${search}` : fetchVoucher, fetcher)
+  console.log(isLoading)
   console.log(data)
+  const handleFetchVoucher = (page) => {
+    setFetchVoucher(page)
+  }
   return (
     <div>
       <div className="flex justify-between mb-5">
@@ -48,10 +65,10 @@ const VoucherList = () => {
           </div>
         </div>
         <div className="">
-          <button className="text-white flex justify-center items-center gap-3 bg-teal-400 hover:bg-teal-500 focus:ring-4 focus:outline-none focus:ring-teal-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-teal-400 dark:hover:bg-teal-500 dark:focus:ring-teal-500">
+          <Link to='/dashboard/sale' className="text-white flex justify-center items-center gap-3 bg-teal-400 hover:bg-teal-500 focus:ring-4 focus:outline-none focus:ring-teal-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-teal-400 dark:hover:bg-teal-500 dark:focus:ring-teal-500">
             Create Sale
             <HiPlus />
-          </button>
+          </Link >
         </div>
       </div>
 
@@ -84,10 +101,13 @@ const VoucherList = () => {
             </tr>
 
 
-            {isLoading ? <SkeletonLoader /> : data.map((product) => <VoucherListRow product={product} key={product.id} />)}
+            {isLoading ? <SkeletonLoader /> : data?.data?.map((product) => <VoucherListRow product={product} key={product.id} />)}
           </tbody>
         </table>
+
       </div>
+      {!isLoading && <PaginationVoucher data={data} handleFetchVoucher={handleFetchVoucher} />
+      }
     </div>
   );
 };

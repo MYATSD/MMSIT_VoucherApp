@@ -1,5 +1,5 @@
 import React, { useRef, useState } from "react";
-import { HiSearch, HiX } from "react-icons/hi";
+import { HiArrowLeft, HiArrowRight, HiSearch, HiX } from "react-icons/hi";
 import {
   HiOutlinePencil,
   HiOutlineTrash,
@@ -13,24 +13,43 @@ import ProductListEmptyStage from "./ProductListEmptyStage";
 import ProductRow from "./ProductRow";
 import { Link } from "react-router-dom";
 import { debounce } from "lodash";
+import SkeletonLoader from "./SkeletonLoader";
+import Pagination from "./Pagination";
+import useCookie from 'react-use-cookie';
+
 
 const ProductList = () => {
+  const [userToken] = useCookie("my_token")
   const [search, setSearch] = useState("")
-  const fetcher = (url) => fetch(url).then((res) => res.json());
+  const fetcher = (url) => fetch(url, {
+    headers: {
+      Authorization: `Bearer ${userToken}`
+    },
+  }).then((res) => res.json());
   const searchInput = useRef('')
-
+  const [fetchUrl, setFetchUrl] = useState(import.meta.env.VITE_BASE_URL + "/products")
   const handleSearch = debounce((e) => {
     setSearch(e.target.value)
   }, 500)
   const { data, error, isLoading } = useSWR(search ?
-    `${import.meta.env.VITE_BASE_URL}/products?product_name_like=${search}` : `${import.meta.env.VITE_BASE_URL}/products`,
+    `${import.meta.env.VITE_BASE_URL}/products?q=${search}` : fetchUrl,
     fetcher
   );
+  console.log(data)
   const handleClear = () => {
     setSearch("")
     searchInput.current.value = ""
 
   }
+  const handleFetchUrl = (page) => {
+    // setFetchUrl(`${import.meta.env.VITE_BASE_URL}/products?p=${page}`)
+    setFetchUrl(page)
+  }
+  // if (isLoading) {
+  //   return "Loading...."
+  // } else (
+  //   console.log(data)
+  // )
 
   return (
     <>
@@ -56,7 +75,7 @@ const ProductList = () => {
           </div>
           <div className="">
             <Link
-              to={"/product/create"}
+              to={"create"}
               className="text-white flex justify-center items-center gap-3 bg-teal-400 hover:bg-teal-500 focus:ring-4 focus:outline-none focus:ring-teal-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-teal-400 dark:hover:bg-teal-500 dark:focus:ring-teal-500"
             >
               Add new Product
@@ -66,7 +85,7 @@ const ProductList = () => {
         </div>
 
         <div className="relative overflow-x-auto mb-6">
-          <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+          <table className="w-full  text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
             <thead className="text-xs text-gray-700 uppercase bg-teal-50 dark:bg-teal-700 dark:text-gray-400">
               <tr>
                 <th scope="col" className="px-6 py-3">
@@ -82,6 +101,9 @@ const ProductList = () => {
                   Created At
                 </th>
                 <th scope="col" className="px-6 py-3 text-end">
+                  Updated At
+                </th>
+                <th scope="col" className="px-6 py-3 text-end">
                   Action
                 </th>
               </tr>
@@ -89,17 +111,21 @@ const ProductList = () => {
             <tbody>
               {isLoading ? (
                 <ProductListSkeletonLoader />
-              ) : data.length === 0 ? (
+              ) : data?.data.length === 0 ? (
                 <ProductListEmptyStage />
               ) : (
-                data.map((product) => (
+                data?.data?.map((product) => (
                   <ProductRow key={product.id} product={product} />
                 ))
               )}
             </tbody>
           </table>
         </div>
+        {!isLoading && <Pagination data={data} handleFetchUrl={handleFetchUrl} />}
       </div>
+
+
+
     </>
   );
 };
